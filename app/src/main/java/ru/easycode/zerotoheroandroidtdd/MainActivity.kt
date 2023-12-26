@@ -8,7 +8,6 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var b:ActivityMainBinding
-    private var isHide : String = "NO"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
@@ -16,21 +15,21 @@ class MainActivity : AppCompatActivity() {
 
         b.hideButton.setOnClickListener{
             b.titleTextView.visibility = View.GONE
-            isHide = "YES"
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        outState.putString("isHide", isHide)
+        outState.putInt(KEY, b.titleTextView.visibility)
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        if (savedInstanceState.getString("isHide") == "YES")
-            b.titleTextView.visibility = View.GONE
-        else
-            b.titleTextView.visibility = View.VISIBLE
+        b.titleTextView.visibility = savedInstanceState.getInt(KEY)
         super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    companion object {
+        private const val KEY = "isHide"
     }
 
 }
