@@ -1,58 +1,39 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.TextView
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
-import java.io.Serializable
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var b : ActivityMainBinding
-    private var state : State = State.Initial
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
 
         b.removeButton.setOnClickListener{
-            state = State.Removed
-            state.apply(b.rootLayout, b.titleTextView, b.removeButton)
+            b.rootLayout.removeView(b.titleTextView)
+            b.removeButton.isEnabled = false
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putSerializable(KEY, state)
+        outState.putString(KEY, b.rootLayout.findViewById<TextView>(R.id.titleTextView)?.toString())
+        outState.putBoolean(KEY, b.removeButton.isEnabled)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        state = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            savedInstanceState.getSerializable(KEY, State::class.java) as State
-        } else {
-            savedInstanceState.getSerializable(KEY) as State
+        if (savedInstanceState.getString(KEY) == null && !savedInstanceState.getBoolean(KEY)) {
+            b.rootLayout.removeView(b.titleTextView)
+            b.removeButton.isEnabled = false
         }
-        state.apply(b.rootLayout,b.titleTextView,b.removeButton)
     }
 
     companion object {
         private const val KEY = "key"
-    }
-}
-
-interface State : Serializable {
-    fun apply(linearLayout: LinearLayout, textView: TextView, button: Button)
-
-    object Initial : State {
-        override fun apply(linearLayout: LinearLayout, textView: TextView, button: Button) = Unit
-    }
-    object Removed : State {
-        override fun apply(linearLayout: LinearLayout, textView: TextView, button: Button) {
-            linearLayout.removeView(textView)
-            button.isEnabled = false
-        }
     }
 }
