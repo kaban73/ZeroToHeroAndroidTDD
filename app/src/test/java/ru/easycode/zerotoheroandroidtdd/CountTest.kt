@@ -34,6 +34,12 @@ class CountTest {
     }
 
     @Test(expected = IllegalStateException::class)
+    fun test_increment_notNumber_step_3() {
+        val count: Count = Count.Base(step = 3)
+        var actual: String = count.increment(number = "a")
+    }
+
+    @Test(expected = IllegalStateException::class)
     fun test_zero() {
         Count.Base(step = 0)
     }
