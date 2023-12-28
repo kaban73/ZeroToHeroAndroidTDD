@@ -1,0 +1,22 @@
+package ru.easycode.zerotoheroandroidtdd
+
+interface Count {
+    fun increment(number: String) : UiState
+    fun getMax() : String
+    class Base(private val step : Int, private val max : Int) : Count {
+        init {
+            if (step < 1) throw IllegalStateException("step should be positive, but was $step")
+            if (max < 1) throw IllegalStateException("max should be positive, but was $max")
+            if (max < step) throw IllegalStateException("max should be more than step")
+        }
+        override fun getMax() : String {return max.toString()}
+        override fun increment(number: String): UiState {
+
+            return if (step + number.toInt() + step > max)
+                UiState.Max((step + number.toInt()).toString())
+            else
+                UiState.Base((step + number.toInt()).toString())
+        }
+
+    }
+}
