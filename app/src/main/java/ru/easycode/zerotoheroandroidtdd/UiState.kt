@@ -1,22 +1,24 @@
 package ru.easycode.zerotoheroandroidtdd
 
 import android.widget.Button
+import android.widget.TextView
 import java.io.Serializable
 
 interface UiState : Serializable {
-    fun getText():String
-    fun disable(button: Button)
-    data class Base(private val text : String):UiState {
-        override fun getText():String {return text}
-        override fun disable(button: Button) {
-            button.isEnabled = false
+    fun apply(textView:TextView, button: Button)
+
+    abstract class Abstract(private val text:String) : UiState {
+        override fun apply(textView:TextView, button: Button) {
+            textView.text = text
         }
     }
+    data class Base(private val text : String):Abstract(text)
 
-    data class Max(private val text: String) : UiState {
-        override fun getText():String {return text}
-        override fun disable(button: Button) {
+    data class Max(private val text: String) : Abstract(text) {
+        override fun apply(textView: TextView, button: Button) {
+            super.apply(textView, button)
             button.isEnabled = false
         }
+
     }
 }

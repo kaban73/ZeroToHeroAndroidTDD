@@ -15,9 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(b.root)
         b.incrementButton.setOnClickListener{
             uiState = count.increment(b.countTextView.text.toString())
-            b.countTextView.text = uiState.getText()
-            if (uiState.javaClass == UiState.Max("").javaClass)
-                uiState.disable(b.incrementButton)
+            uiState.apply(b.countTextView, b.incrementButton)
         }
     }
     override fun onSaveInstanceState(outState: Bundle) {
@@ -32,8 +30,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             savedInstanceState.getSerializable(KEY) as UiState
         }
-        if (uiState.javaClass == UiState.Max("").javaClass)
-            uiState.disable(b.incrementButton)
+        uiState.apply(b.countTextView, b.incrementButton)
     }
 
     companion object {
