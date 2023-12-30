@@ -15,6 +15,7 @@
         android:id="@+id/decrementButton"/>
 
     <TextView
+        android:freezesText="true"
         android:id="@+id/countTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

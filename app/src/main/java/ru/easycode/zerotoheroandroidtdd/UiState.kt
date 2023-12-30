@@ -5,7 +5,7 @@ import android.widget.TextView
 import java.io.Serializable
 
 
-interface UiState : Serializable{
+interface UiState{
     fun apply(textView: TextView, incrementButton:Button, decrementButton : Button )
     abstract class Abstract(private val text: String) : UiState {
         override fun apply(textView: TextView, incrementButton:Button, decrementButton : Button ) {
