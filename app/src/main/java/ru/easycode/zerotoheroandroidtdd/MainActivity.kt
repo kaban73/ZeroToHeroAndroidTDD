@@ -2,6 +2,8 @@ package ru.easycode.zerotoheroandroidtdd
 
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
@@ -18,7 +20,7 @@ class MainActivity : AppCompatActivity() {
             b.progressBar.visibility = View.VISIBLE
             b.actionButton.isEnabled = false
 
-            b.actionButton.postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 b.progressBar.visibility = View.GONE
                 b.titleTextView.visibility = View.VISIBLE
                 b.actionButton.isEnabled = true
