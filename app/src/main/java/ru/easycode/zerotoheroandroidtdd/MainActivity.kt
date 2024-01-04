@@ -7,13 +7,11 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var b : ActivityMainBinding
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
-    private lateinit var viewModelFactory: MainViewModelFactory
+    private val viewModel = MainViewModel(KeepLiveData.liveData, Repository.Base())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
-        viewModelFactory = MainViewModelFactory(this)
 
         b.actionButton.setOnClickListener{
             viewModel.load()
@@ -23,4 +21,8 @@ class MainActivity : AppCompatActivity() {
             uiState.apply(b.titleTextView, b.actionButton, b.progressBar)
         }
     }
+}
+
+object KeepLiveData {
+    val liveData = LiveDataWrapper.Base()
 }

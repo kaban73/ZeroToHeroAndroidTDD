@@ -10,7 +10,7 @@ import java.io.Serializable
 class MainViewModel(
     private val liveDataWrapper: LiveDataWrapper,
     private val repository: Repository
-) : Serializable, ViewModel(){
+) : ViewModel(){
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
     fun liveData() = liveDataWrapper.liveData()
     fun load() {
