@@ -1,3 +1,7 @@
 package ru.easycode.zerotoheroandroidtdd.Service
 
-data class SimpleResponse(val text : String)
+import com.google.gson.annotations.SerializedName
+
+data class SimpleResponse(
+    @SerializedName("text")
+    val text : String)
