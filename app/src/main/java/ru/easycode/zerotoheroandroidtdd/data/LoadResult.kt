@@ -5,17 +5,15 @@ import ru.easycode.zerotoheroandroidtdd.viewModel.LiveDataWrapper
 
 interface LoadResult {
     fun show(updateLiveData: LiveDataWrapper.Update)
-    data class Success(val data : SimpleResponse) : LoadResult {
+    data class Success(private val data : SimpleResponse) : LoadResult {
         override fun show(updateLiveData: LiveDataWrapper.Update) {
             updateLiveData.update(UiState.ShowData(data.text))
         }
     }
-    data class Error(val noConnection : Boolean): LoadResult {
+    data class Error(private val noConnection : Boolean): LoadResult {
+        private val textError = if (noConnection) "No internet connection" else "Something went wrong"
         override fun show(updateLiveData: LiveDataWrapper.Update) {
-            if (noConnection)
-                updateLiveData.update(UiState.ShowData("No internet connection"))
-            else
-                updateLiveData.update(UiState.ShowData("Something went wrong"))
+            updateLiveData.update(UiState.ShowData(textError))
         }
     }
 

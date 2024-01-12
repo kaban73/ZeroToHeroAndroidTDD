@@ -8,14 +8,14 @@ import ru.easycode.zerotoheroandroidtdd.UiState
 import ru.easycode.zerotoheroandroidtdd.data.Repository
 
 class MainViewModel(
-    private val liveDataWrapper: LiveDataWrapper,
-    private val repository: Repository) {
+    private val liveDataWrapper: LiveDataWrapper.Mutable,
+    private val repository: Repository) : LiveDataWrapper.Observe{
     private val viewModelScope = CoroutineScope ( SupervisorJob() + Dispatchers.Main.immediate )
-    fun liveData() = liveDataWrapper.liveData()
+    override fun liveData() = liveDataWrapper.liveData()
     fun load() {
         liveDataWrapper.update(UiState.ShowProgress)
         viewModelScope.launch {
-            repository.load().show(liveDataWrapper as LiveDataWrapper.Update)
+            repository.load().show(liveDataWrapper)
         }
     }
     fun save(bundleWrapper: BundleWrapper.Save) {

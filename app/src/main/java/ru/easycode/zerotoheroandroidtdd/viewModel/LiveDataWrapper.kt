@@ -6,18 +6,18 @@ import ru.easycode.zerotoheroandroidtdd.SingleLiveEvent
 import ru.easycode.zerotoheroandroidtdd.UiState
 
 interface LiveDataWrapper {
-    fun liveData() : LiveData<UiState>
-    fun save(bundleWrapper: BundleWrapper.Save)
-    fun update(value: UiState)
-    interface Update : LiveDataWrapper {
-
+    interface Update {
+        fun update(value: UiState)
     }
-    interface Mutable : Update, LiveDataWrapper {
-
-
+    interface Save {
+        fun save(bundleWrapper: BundleWrapper.Save)
     }
+    interface Observe {
+        fun liveData() : LiveData<UiState>
+    }
+    interface Mutable : Update,  Save, Observe
     class Base(private val liveData: MutableLiveData<UiState> = SingleLiveEvent())
-        : Mutable, Update,  LiveDataWrapper {
+        : Mutable {
         override fun save(bundleWrapper: BundleWrapper.Save) {
             liveData.value?.let { bundleWrapper.save(it) }
         }
