@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ZeroToHeroAndroidTDD</string>
+    <string name="change">change</string>
+    <string name="please_enter_the_text">Please enter the text</string>
 </resources>
