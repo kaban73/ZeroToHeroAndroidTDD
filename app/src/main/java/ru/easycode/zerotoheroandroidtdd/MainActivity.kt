@@ -16,4 +16,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY, b.titleTextView.text.toString())
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        b.titleTextView.text = savedInstanceState.getString(KEY)
+    }
+
+    companion object {
+        private const val KEY = "saveString"
+    }
 }
