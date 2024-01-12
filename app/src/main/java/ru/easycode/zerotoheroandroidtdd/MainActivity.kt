@@ -6,27 +6,27 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var b : ActivityMainBinding
+    private lateinit var viewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.root)
+        viewModel = (application as App).viewModel
         b.actionButton.setOnClickListener {
-            b.titleTextView.text = b.inputEditText.text
-            b.inputEditText.setText("")
+            viewModel.changeText(b.inputEditText.text.toString(), b.inputEditText)
+        }
+        viewModel.liveData().observe(this) {
+            b.titleTextView.text = viewModel.liveData().value
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(KEY, b.titleTextView.text.toString())
+        viewModel.save(BundleWrapper.Base(outState))
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        b.titleTextView.text = savedInstanceState.getString(KEY)
-    }
-
-    companion object {
-        private const val KEY = "saveString"
+        viewModel.restore(BundleWrapper.Base(savedInstanceState))
     }
 }
