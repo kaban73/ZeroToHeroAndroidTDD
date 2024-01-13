@@ -1,51 +1,43 @@
 package ru.easycode.zerotoheroandroidtdd
 
+import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.io.Serializable
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import ru.easycode.zerotoheroandroidtdd.databinding.ListItemBinding
+class CustomAdapter :
+    RecyclerView.Adapter<CustomAdapter.MyViewHolder>() {
 
-class CustomAdapter(private val dataSet: ArrayList<String>) :
-    RecyclerView.Adapter<CustomAdapter.ViewHolder>(), Serializable {
+    private val itemList = ArrayList<CharSequence>()
+    fun add(source: CharSequence) {
+        itemList.add(source)
+        notifyItemChanged(itemList.size - 1)
+    }
+    fun save(bundle: Bundle) {
+        bundle.putCharSequenceArrayList(KEY, itemList)
+    }
+    fun restore(bundle: Bundle) {
+        itemList.addAll(bundle.getCharSequenceArrayList(KEY) ?: ArrayList<CharSequence>())
+        notifyItemRangeChanged(0, itemList.size)
+    }
+    companion object {
+        private const val KEY = "key"
+    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return MyViewHolder(ListItemBinding.inflate(LayoutInflater.from(parent.context)))
+    }
 
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder)
-     */
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val textView: TextView
+    override fun getItemCount(): Int =itemList.size
 
-        init {
-            // Define click listener for the ViewHolder's View
-            textView = view.findViewById(R.id.elementTextView)
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        holder.bind(itemList[position])
+    }
+
+    class MyViewHolder(private val binding: ListItemBinding) : ViewHolder(binding.root) {
+        fun bind(source:CharSequence) {
+            binding.elementTextView.text = source
         }
-    }
-
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
-        // Create a new view, which defines the UI of the list item
-        val view = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.list_item, viewGroup, false)
-
-        return ViewHolder(view)
-    }
-
-    // Replace the contents of a view (invoked by the layout manager)
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-
-        // Get element from your dataset at this position and replace the
-        // contents of the view with that element
-        viewHolder.textView.text = dataSet[position]
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = dataSet.size
-
-    fun add(text : String) {
-        dataSet.add(text)
-        notifyDataSetChanged()
     }
 
 }
