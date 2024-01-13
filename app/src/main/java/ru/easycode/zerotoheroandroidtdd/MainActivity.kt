@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.children
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
+import ru.easycode.zerotoheroandroidtdd.databinding.ListItemBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,9 +33,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addTextView(text : String) {
-        val textView = TextView(this@MainActivity)
-        textView.text = text
-        b.contentLayout.addView(textView)
+        val textView = ListItemBinding.inflate(layoutInflater)
+        textView.root.text = text
+        b.contentLayout.addView(textView.root)
     }
 
     companion object {
