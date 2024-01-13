@@ -12,11 +12,8 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.rootLayout)
 
-        b.inputEditText.setOnClickListener {
-            b.inputEditText.setSelection( b.inputEditText.length())
-        }
         b.inputEditText.addTextChangedListener {
-            b.actionButton.isEnabled = it.toString() == "min"
+            b.actionButton.isEnabled = it.toString().length >= 3
         }
         b.actionButton.setOnClickListener {
             b.titleTextView.text = b.inputEditText.text
