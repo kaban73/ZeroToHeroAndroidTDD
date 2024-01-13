@@ -13,17 +13,11 @@ class MainActivity : AppCompatActivity() {
         b = ActivityMainBinding.inflate(layoutInflater)
         setContentView(b.rootLayout)
 
-        b.inputEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            }
-
+        b.inputEditText.addTextChangedListener(object : SimpleTextWatcher() {
             override fun afterTextChanged(s: Editable?) {
-                b.actionButton.isEnabled = s.toString().length >= 3
+                super.afterTextChanged(s)
+                b.actionButton.isEnabled = s.toString().length >=3
             }
-
         })
 
         b.actionButton.setOnClickListener {
@@ -31,4 +25,10 @@ class MainActivity : AppCompatActivity() {
             b.inputEditText.setText("")
         }
     }
+    private abstract class SimpleTextWatcher : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) = Unit
+        override fun afterTextChanged(s: Editable?) = Unit
+    }
 }
+
