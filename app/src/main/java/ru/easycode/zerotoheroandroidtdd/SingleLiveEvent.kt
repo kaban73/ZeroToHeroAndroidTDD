@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
 /**
- * Please use this class in LiveDataWrapper
+ * Please use this class in ListLiveDataWrapper
  */
 class SingleLiveEvent<T> : MutableLiveData<T>() {
 
