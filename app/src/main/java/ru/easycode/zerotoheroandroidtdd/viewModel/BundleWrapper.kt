@@ -9,14 +9,14 @@ interface BundleWrapper {
     interface Restore {
         fun restore() :List<CharSequence>
     }
-    interface Mutable : Save, Restore, BundleWrapper
+    interface Mutable : Save, Restore
     class Base(private val bundle: Bundle) : Mutable {
         override fun save(list: ArrayList<CharSequence>) {
             bundle.putCharSequenceArrayList(KEY, list)
         }
 
         override fun restore(): List<CharSequence> {
-            return bundle.getCharSequenceArrayList(KEY) as List<CharSequence>
+            return bundle.getCharSequenceArrayList(KEY) ?: ArrayList()
         }
 
     }

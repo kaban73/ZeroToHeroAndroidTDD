@@ -28,8 +28,6 @@ class MainActivity : AppCompatActivity() {
             myCustomAdapter.updateList(it)
         }
     }
-
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         viewModel.save(BundleWrapper.Base(outState))
