@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ZeroToHeroAndroidTDD</string>
+    <string name="addbutton">addButton</string>
+    <string name="create">create</string>
 </resources>
