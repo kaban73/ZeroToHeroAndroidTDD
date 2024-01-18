@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity(), ProvideViewModel {
         }
         viewModel.init(savedInstanceState == null)
     }
-
     override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T =
         (application as App).viewModel(viewModelClass)
+
 }
