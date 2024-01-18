@@ -14,18 +14,18 @@ class CreateFragment : AbstractFragment<FragmentPageBinding>() {
     override fun bind(inflater: LayoutInflater, container: ViewGroup?): FragmentPageBinding =
         FragmentPageBinding.inflate(inflater,container,false)
 
+    private lateinit var viewModel : CreateViewModel
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() = viewModel.comeback()
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = (activity as ProvideViewModel).viewModel(CreateViewModel::class.java)
+        viewModel = (activity as ProvideViewModel).viewModel(CreateViewModel::class.java)
 
-        val isCreateFragment = requireActivity().supportFragmentManager.fragments.last() == CreateFragment::class.java
-        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(
-            isCreateFragment
-        ) {
-            override fun handleOnBackPressed() = viewModel.comeback()
-        })
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         binding.createButton.setOnClickListener {
+            hideKeyboard()
             val text = binding.inputEditText.text.toString()
             viewModel.add(text)
         }
@@ -34,4 +34,9 @@ class CreateFragment : AbstractFragment<FragmentPageBinding>() {
             binding.createButton.isEnabled = it.toString().length > 2
         }
      }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onBackPressedCallback.remove()
+    }
 }

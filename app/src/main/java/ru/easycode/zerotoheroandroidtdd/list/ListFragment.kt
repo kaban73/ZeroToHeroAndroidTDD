@@ -26,15 +26,13 @@ class ListFragment : AbstractFragment<FragmentListBinding>() {
         binding.addButton.setOnClickListener {
             viewModel.create()
         }
-    }
 
+        savedInstanceState?.let {
+            viewModel.restore(BundleWrapper.Base(it))
+        }
+    }
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         viewModel.save(BundleWrapper.Base(outState))
     }
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        viewModel.restore(BundleWrapper.Base(savedInstanceState ?: Bundle()))
-    }
-
 }
