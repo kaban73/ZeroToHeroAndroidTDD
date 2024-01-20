@@ -9,6 +9,10 @@ import org.junit.Test
 import ru.easycode.zerotoheroandroidtdd.FakeClearViewModel.Companion.CLEAR
 import ru.easycode.zerotoheroandroidtdd.FakeListLiveDataWrapper.Companion.LIVE_DATA_DELETE
 import ru.easycode.zerotoheroandroidtdd.FakeRepositoryDelete.Companion.REPOSITORY_DELETE
+import ru.easycode.zerotoheroandroidtdd.delete.DeleteViewModel
+import ru.easycode.zerotoheroandroidtdd.list.Item
+import ru.easycode.zerotoheroandroidtdd.list.ItemUi
+import ru.easycode.zerotoheroandroidtdd.repository.Repository
 
 class DeleteViewModelTest {
 
@@ -28,8 +32,8 @@ class DeleteViewModelTest {
         repository = FakeRepositoryDelete.Base(order)
         clear = FakeClearViewModel.Base(order)
         viewModel = DeleteViewModel(
-            deleteLiveDataWrapper = liveDataWrapper,
             repository = repository,
+            deleteLiveDataWrapper = liveDataWrapper,
             clear = clear,
             dispatcher = Dispatchers.Unconfined,
             dispatcherMain = Dispatchers.Unconfined
