@@ -31,8 +31,8 @@ interface ListLiveDataWrapper {
 
         override fun update(item: ItemUi) {
             val list = liveData.value?.toMutableList() ?: ArrayList()
-            list.find { it.id == item.id }?.also{
-                it.text = item.text
+            list.find { it.areItemsSame(item) }?.let{
+                list[list.indexOf(it)] = item
             }
             update(list)
         }

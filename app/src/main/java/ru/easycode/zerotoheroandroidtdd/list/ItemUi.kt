@@ -8,7 +8,7 @@ data class ItemUi(
     var text : String
 ) {
     fun areItemsSame(item: ItemUi) =  id == item.id
-    fun areContentsTheSame(item: ItemUi) = id != item.id && text == item.text
+    fun areContentsTheSame(item: ItemUi) = text == item.text
     fun detailsItem(detailsItemUi: DetailsItemUi) = detailsItemUi.details(id)
     fun show(textView: TextView) = textView.setText(text)
 }
