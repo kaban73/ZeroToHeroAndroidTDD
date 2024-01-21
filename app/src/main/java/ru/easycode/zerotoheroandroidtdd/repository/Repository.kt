@@ -28,8 +28,11 @@ interface Repository {
         override fun list(): List<Item> =
             dataSource.list().map { Item(it.id,it.text) }
 
-        override fun update(id: Long, newText: String) =
-            dataSource.add(ItemCache(id, newText))
+        override fun update(id: Long, newText: String) {
+            val curr = dataSource.item(id)
+            val new = curr.copy(text = newText)
+            dataSource.add(new)
+        }
         override fun add(value: String) : Long {
             val id = now.nowMillis()
             dataSource.add(ItemCache(id, value))

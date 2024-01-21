@@ -4,8 +4,8 @@ import android.widget.TextView
 import ru.easycode.zerotoheroandroidtdd.details.DetailsItemUi
 
 data class ItemUi(
-    val id: Long,
-    var text : String
+    private val id: Long,
+    private var text : String
 ) {
     fun areItemsSame(item: ItemUi) =  id == item.id
     fun areContentsTheSame(item: ItemUi) = text == item.text
