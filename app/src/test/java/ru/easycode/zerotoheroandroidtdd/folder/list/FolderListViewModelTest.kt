@@ -32,9 +32,9 @@ class FolderListViewModelTest {
         folderLiveDataWrapper = FakeFolderUpdateLiveDataWrapper.Base(order)
         navigation = FakeNavigation.Base(order)
         viewModel = FolderListViewModel(
-            repository = repository,
             listLiveDataWrapper = liveDataWrapper,
             folderLiveDataWrapper = folderLiveDataWrapper,
+            repository = repository,
             navigation = navigation,
             dispatcher = Dispatchers.Unconfined,
             dispatcherMain = Dispatchers.Unconfined

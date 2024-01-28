@@ -31,8 +31,8 @@ class CreateFolderViewModelTest {
         navigation = FakeNavigation.Base(order)
         liveDataWrapper = FakeAddLiveDataWrapper.Base(order)
         viewModel = CreateFolderViewModel(
-            repository = repository,
             liveDataWrapper = liveDataWrapper,
+            repository = repository,
             navigation = navigation,
             clear = clear,
             dispatcher = Dispatchers.Unconfined,

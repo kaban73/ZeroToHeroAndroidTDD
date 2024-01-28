@@ -40,9 +40,9 @@ private interface FakeProvide : ProvideViewModel {
         private val order: Order
     ) : FakeProvide {
 
-        override fun <T : ViewModel> viewModel(clasz: Class<T>): T {
-            order.add(clasz.simpleName)
-            return clasz.getDeclaredConstructor().newInstance()
+        override fun <T : ViewModel> viewModel(viewModelClass: Class<T>): T {
+            order.add(viewModelClass.simpleName)
+            return viewModelClass.getDeclaredConstructor().newInstance()
         }
     }
 }

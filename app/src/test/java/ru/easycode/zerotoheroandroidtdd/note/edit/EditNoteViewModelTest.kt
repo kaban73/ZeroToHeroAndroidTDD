@@ -13,6 +13,7 @@ import ru.easycode.zerotoheroandroidtdd.folder.core.FolderLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.folder.details.FolderDetailsScreen
 import ru.easycode.zerotoheroandroidtdd.folder.details.NoteListLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.note.core.MyNote
+import ru.easycode.zerotoheroandroidtdd.note.core.NoteLiveDataWrapper
 import ru.easycode.zerotoheroandroidtdd.note.core.NotesRepository
 
 class EditNoteViewModelTest {
@@ -154,9 +155,9 @@ private interface FakeEditNoteRepository : NotesRepository.Edit {
             order.add(REPOSITORY_DELETE)
         }
 
-        override suspend fun renameNote(noteId: Long, newName: String) {
+        override suspend fun renameNote(noteId: Long, text: String) {
             actualId = noteId
-            actualName = newName
+            actualName = text
             order.add(REPOSITORY_RENAME)
         }
 

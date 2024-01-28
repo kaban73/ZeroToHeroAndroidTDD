@@ -36,9 +36,9 @@ class FolderDetailsViewModelTest {
         folderLiveDataWrapper = FakeFolderLiveDataWrapper.Base(order)
         navigation = FakeNavigation.Base(order)
         viewModel = FolderDetailsViewModel(
-            noteListRepository = noteListRepository,
             liveDataWrapper = noteListLiveDataWrapper,
             folderLiveDataWrapper = folderLiveDataWrapper,
+            noteListRepository = noteListRepository,
             navigation = navigation,
             clear = clear,
             dispatcher = Dispatchers.Unconfined,
