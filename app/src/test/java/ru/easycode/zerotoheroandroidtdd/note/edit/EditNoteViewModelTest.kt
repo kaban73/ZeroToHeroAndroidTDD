@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.note.edit
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -95,7 +96,7 @@ private const val REPOSITORY_RENAME = "NotesRepository.Edit#RENAME"
 private const val REPOSITORY_NOTE = "NotesRepository.Edit#note"
 private const val NOTES_LIVE_DATA_UPDATE = "NoteListLiveDataWrapper.Update#update"
 
-private interface FakeNoteLiveDataWrapper : NoteLiveDataWrapper {
+private interface FakeNoteLiveDataWrapper : NoteLiveDataWrapper.Mutable {
 
     fun check(expected: String)
 
@@ -105,6 +106,10 @@ private interface FakeNoteLiveDataWrapper : NoteLiveDataWrapper {
 
         override fun check(expected: String) {
             assertEquals(expected, actual)
+        }
+
+        override fun liveData(): LiveData<String> {
+            throw IllegalStateException("Don't use in Unit Test")
         }
 
         override fun update(noteText: String) {

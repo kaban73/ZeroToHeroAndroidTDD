@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.folder.details
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -88,7 +89,7 @@ class FolderDetailsViewModelTest {
     fun test_edit_folder() {
         folderLiveDataWrapper.update(FolderUi(id = 9L, "folder title", 0))
         viewModel.editFolder()
-        navigation.checkScreen(EditFolderScreen(folderId = 9L))
+        navigation.checkScreen(EditFolderScreen(folderId = 9L, folderName = "folder title"))
         order.check(listOf(UPDATE_FOLDER_LIVEDATA, NAVIGATE))
     }
 
@@ -141,10 +142,14 @@ private interface FakeNoteListLiveDataWrapper : NoteListLiveDataWrapper.UpdateLi
 
         private val actual = mutableListOf<NoteUi>()
 
-        override fun update(notes: List<NoteUi>) {
+        override fun updateList(notes: List<NoteUi>) {
             actual.clear()
             actual.addAll(notes)
             order.add(UPDATE_NOTES_LIVEDATA)
+        }
+
+        override fun liveData(): LiveData<List<NoteUi>> {
+            throw IllegalStateException("Don't use in Unit Test")
         }
 
         override fun check(expected: List<NoteUi>) {

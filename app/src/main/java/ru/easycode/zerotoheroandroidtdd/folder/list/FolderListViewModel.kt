@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.folder.list
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +21,7 @@ class FolderListViewModel(
     private val navigation: Navigation.Update,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val dispatcherMain: CoroutineDispatcher = Dispatchers.Main
-) : ViewModel(){
+) : ViewModel(), FolderListLiveDataWrapper.Read{
     fun init() {
         viewModelScope.launch(dispatcher) {
             val folders = repository.folders().map { FolderUi(it.id,it.title,it.notesCount) }
@@ -40,5 +41,7 @@ class FolderListViewModel(
     }
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    override fun liveData(): LiveData<List<FolderUi>> =
+        listLiveDataWrapper.liveData()
 
 }

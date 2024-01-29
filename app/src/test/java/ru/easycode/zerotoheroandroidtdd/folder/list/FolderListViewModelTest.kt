@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.folder.list
 
+import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -125,6 +126,10 @@ private interface FakeLiveDataWrapper : FolderListLiveDataWrapper.UpdateListAndR
             actual.clear()
             actual.addAll(list)
             order.add(UPDATE)
+        }
+
+        override fun liveData(): LiveData<List<FolderUi>> {
+            throw IllegalStateException("Don't use in Unit Test")
         }
     }
 }

@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.folder.details
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -24,17 +25,16 @@ class FolderDetailsViewModel(
     private val clear : ClearViewModels,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val dispatcherMain: CoroutineDispatcher = Dispatchers.Main
-) : ViewModel() {
+) : ViewModel(), NoteListLiveDataWrapper.Read, FolderLiveDataWrapper.FolderName {
     fun init() {
         val id = folderLiveDataWrapper.folderId()
         viewModelScope.launch(dispatcher) {
             val notes = noteListRepository.noteList(id).map { NoteUi(it.id,it.title,it.folderId) }
             withContext(dispatcherMain) {
-                liveDataWrapper.update(notes)
+                liveDataWrapper.updateList(notes)
             }
         }
     }
-
     fun createNote() {
         val id = folderLiveDataWrapper.folderId()
         navigation.update(CreateNoteScreen(id))
@@ -46,7 +46,8 @@ class FolderDetailsViewModel(
 
     fun editFolder() {
         val id = folderLiveDataWrapper.folderId()
-        navigation.update(EditFolderScreen(id))
+        val name = folderLiveDataWrapper.folderName()
+        navigation.update(EditFolderScreen(id, name))
     }
 
     fun comeback() {
@@ -55,5 +56,10 @@ class FolderDetailsViewModel(
     }
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    override fun liveData(): LiveData<List<NoteUi>> =
+        liveDataWrapper.liveData()
+
+    override fun folderName(): String =
+        folderLiveDataWrapper.folderName()
 
 }

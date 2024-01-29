@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.folder.details
 
+import androidx.lifecycle.LiveData
 import org.junit.Assert.assertEquals
 import ru.easycode.zerotoheroandroidtdd.core.Order
 import ru.easycode.zerotoheroandroidtdd.folder.core.FolderLiveDataWrapper
@@ -22,8 +23,16 @@ interface FakeFolderLiveDataWrapper : FolderLiveDataWrapper.Mutable {
             actual = folder
         }
 
+        override fun liveData(): LiveData<FolderUi> {
+            throw IllegalStateException("Don't use in Unit Test")
+        }
+
         override fun folderId(): Long {
             return actual.id
+        }
+
+        override fun folderName(): String {
+            return actual.title
         }
     }
 }

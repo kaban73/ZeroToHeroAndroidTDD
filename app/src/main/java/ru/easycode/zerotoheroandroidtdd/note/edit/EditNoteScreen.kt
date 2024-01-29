@@ -7,7 +7,7 @@ data class EditNoteScreen(
     private val noteId : Long) : Screen {
     override fun show(supportFragmentManager: FragmentManager, containerId: Int) {
         supportFragmentManager.beginTransaction()
-            .replace(containerId, NoteEditFragment(noteId))
+            .replace(containerId, NoteEditFragment.newInstance(noteId))
             .commit()
     }
     }

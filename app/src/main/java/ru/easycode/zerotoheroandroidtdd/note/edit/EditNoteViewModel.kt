@@ -1,5 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd.note.edit
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
@@ -17,14 +18,14 @@ import ru.easycode.zerotoheroandroidtdd.note.core.NotesRepository
 
 class EditNoteViewModel(
     private val folderLiveDataWrapper: FolderLiveDataWrapper.Decrement,
-    private val noteLiveDataWrapper: NoteLiveDataWrapper,
+    private val noteLiveDataWrapper: NoteLiveDataWrapper.Mutable,
     private val noteListLiveDataWrapper: NoteListLiveDataWrapper.Update,
     private val repository: NotesRepository.Edit,
     private val navigation: Navigation.Update,
     private val clear : ClearViewModels,
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val dispatcherMain: CoroutineDispatcher = Dispatchers.Main
-)  :ViewModel() {
+)  :ViewModel(), NoteLiveDataWrapper.Read {
     fun init(noteId: Long) {
         viewModelScope.launch(dispatcher) {
             val text  = repository.note(noteId).title
@@ -60,5 +61,7 @@ class EditNoteViewModel(
     }
 
     private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    override fun liveData(): LiveData<String> =
+        noteLiveDataWrapper.liveData()
 
 }
